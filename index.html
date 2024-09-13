@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кликер</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        #container {
+            text-align: center;
+            position: relative;
+        }
+        #title {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+        #clickButton {
+            width: 150px; /* Ширина кнопки увеличена */
+            height: 150px; /* Высота кнопки увеличена */
+            border-radius: 50%; /* Закругляет кнопку до круга */
+            border: none;
+            background-color: #4CAF50;
+            background-image: url('https://i.postimg.cc/R0JNVM2m/IMG-20240809-181000-208.jpg'); /* Задайте URL изображения здесь */
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+        #clickButton:hover {
+            background-color: #45a049;
+        }
+        #clickCount {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+        #currency {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 18px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ccc;
+        }
+        #store {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 18px;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        #store button {
+            background-color: #2196F3;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        #store button:hover {
+            background-color: #0b7dda;
+        }
+    </style>
+</head>
+<body>
+    <div id="currency">RAFS: 0</div>
+    <div id="store">
+        <div>TON: <span id="tonCount">0</span></div>
+        <button id="buyButton">Купить TON (10 RAFS)</button>
+    </div>
+    <div id="container">
+        <div id="title">RAFIK</div>
+        <button id="clickButton"></button>
+        <div id="clickCount">Кликов: 0</div>
+    </div>
+
+    <script>
+        // Получаем ссылки на элементы
+        const clickButton = document.getElementById('clickButton');
+        const clickCount = document.getElementById('clickCount');
+        const currency = document.getElementById('currency');
+        const tonCount = document.getElementById('tonCount');
+        const buyButton = document.getElementById('buyButton');
+
+        // Инициализируем счетчики
+        let clickCountValue = 0;
+        let currencyValue = 0;
+        let tonValue = 0;
+
+        // Обработчик кликов на кнопку
+        clickButton.addEventListener('click', () => {
+            clickCountValue++;
+            clickCount.textContent = `Кликов: ${clickCountValue}`;
+            
+            // Проверяем, нужно ли начислить валюту
+            if (clickCountValue % 1000 === 0) {
+                currencyValue++;
+                currency.textContent = `RAFS: ${currencyValue}`;
+            }
+        });
+
+        // Обработчик кликов на кнопку покупки
+        buyButton.addEventListener('click', () => {
+            if (currencyValue >= 10) {
+                currencyValue -= 10;
+                tonValue++;
+                currency.textContent = `RAFS: ${currencyValue}`;
+                tonCount.textContent = tonValue;
+            } else {
+                alert('Недостаточно RAFS для покупки TON');
+            }
+        });
+    </script>
+</body>
+</html>
